@@ -7,7 +7,7 @@ Created on Fri Nov 24 10:32:17 2023
 
 # Agregamos el path de las librerias
 import sys
-sys.path.insert(0, 'InstVirtualLib')
+sys.path.insert(0, './InstVirtualLib')
 import platform
 
 # VISA - Virtual Instrumentation
@@ -31,6 +31,10 @@ sys.excepthook = excepthook
 
 plt.close('all')
 
+#########################################################################
+#############     Conexion del osciloscopio - VISA      #################
+#########################################################################
+
 USE_DEVICE = 0
 
 # Abrimos el instrumento
@@ -49,6 +53,10 @@ MiOsciloscopio = GW_Instek(instrument_handler)
 print("Esta conectado un %s"%MiOsciloscopio.INSTR_ID)
 
 
+#########################################################################
+###############     Lecturas de prueba - 2 canales      #################
+#########################################################################
+
 # Pedimos el trazo de cada canal, la salida es en ([seg.],[volt])
 # BUG!!! si no se agrega el VERBOSE=False no anda el GW Instek
 print('-------------')
@@ -57,7 +65,7 @@ print('-------------')
 tiempo2, tension2= MiOsciloscopio.get_trace("2",VERBOSE=False)
 print('-------------')
 
-# Ploteamos los canales
+
 test_fig= plt.figure(1)
 ax_ch1, ax_ch2= test_fig.subplots(2)
 
@@ -70,31 +78,11 @@ plt.legend()
 
 plt.show()
 
-# Genero la señal de prueba
-N= 15
-frec= 1000 # 1kHz
-cycles= 1/frec
-sig_points= 4000
 
-# Amplitudes
-low_value= 1
-top_value= 10
+#########################################################################
+#########     Medicion de la señal a la salida del AGC      #############
+#########################################################################
 
-ascending=  np.linspace(low_value, top_value, int(sig_points/2))
-descending= np.linspace(top_value, low_value, int(sig_points/2))
-amplitudes= np.append(ascending, descending)
-
-
-test_points= np.linspace(0, N*cycles, sig_points)
-test_signal= amplitudes * np.sin(2 * np.pi * frec * test_points)
-
-plt.figure()
-plt.plot(test_points, test_signal, label='Señal de prueba')
-plt.legend()
-plt.grid()
-plt.show()
-
-# Medicion de la señal a la salida del AGC
 tiempo, tension= MiOsciloscopio.get_trace("1",VERBOSE=False)
 
 MiOperador= operador.Operador_osciloscopio(MiOsciloscopio,"Workbench_I")

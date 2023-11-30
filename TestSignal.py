@@ -9,8 +9,8 @@ Created on Fri Nov 24 16:10:12 2023
 import numpy as np
 import matplotlib.pyplot as plt
 import scipy.signal as sig
-import csv
 from math import floor
+import csv
 
 ###############################################################################
 def writeToCSV(output_file, data0, data1):
@@ -77,7 +77,9 @@ a_max= 10
 
 test_points= np.linspace(0, N*cycles, sig_points)
 amplitudes= a_max * np.abs(sig.sawtooth(2 * np.pi * frec/10 * test_points, 0.5))
-''' Sawtooth
+''' 
+    Sawtooth
+    
     El 0.5 indica que la mitad del periodo es ascendente y la otra mitad
     descendente. Esto genera una señal triangular.
     La frecuencia va /10 porque si es mayor, la señal no se modula, y si es

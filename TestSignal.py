@@ -66,17 +66,20 @@ def get_THD(test_signal):
 
 plt.close('all')
 
-# Parametros de la señal
-N= 15               # N° de ciclos
-frec= 1000          # 1kHz
+# Parametros de la señal original
+N= 20               # N° de ciclos
+frec= 1000          # En [Hz]
 cycles= 1/frec      # Periodo de un ciclo
 sig_points= 4000    # N° de muestras
 
-# Amplitudes
-a_max= 10
+# Parametros de la señal modulante
+a_max= 10                   # La señal varia entre -a_max y +a_max
+div_frec_triangular= 20     # Expresa que tanto mas lenta (o rapida) sera respecto de la señal original
+
+## La idea es que siempre sea mas lenta. Mientras mas lenta es, mas gradual es la variacion de amplitud
 
 test_points= np.linspace(0, N*cycles, sig_points)
-amplitudes= a_max * np.abs(sig.sawtooth(2 * np.pi * frec/10 * test_points, 0.5))
+amplitudes= a_max * np.abs(sig.sawtooth(2 * np.pi * frec/div_frec_triangular * test_points, 0.5))
 ''' 
     Sawtooth
     

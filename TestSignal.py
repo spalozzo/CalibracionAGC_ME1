@@ -67,7 +67,7 @@ def get_THD(test_signal):
 plt.close('all')
 
 # Parametros de la señal original
-N= 20               # N° de ciclos
+N= 40               # N° de ciclos
 frec= 1000          # En [Hz]
 cycles= 1/frec      # Periodo de un ciclo
 sig_points= 4000    # N° de muestras
